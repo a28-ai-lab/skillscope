@@ -9,6 +9,15 @@ from resume_parser import (
 )
 import json
 import tempfile
+from PIL import Image
+
+st.set_page_config(page_title="SkillScope by A28 AI Lab", layout="centered")
+
+# Load logo image
+logo = Image.open("A28_logo.jpeg")
+st.image(logo, width=150)
+
+
 
 # Load spaCy and skills.csv
 nlp = spacy.load("en_core_web_sm")
@@ -17,6 +26,17 @@ skill_list = skills_df['Skill'].dropna().str.lower().tolist()
 skill_set = list(set(skill_list))
 
 st.title("🤖 A28 AI Lab – SkillScope: Resume Analyzer + JD Matcher")
+st.markdown("""
+### 👇 How to Use SkillScope
+
+1. **Upload your Resume (PDF only)**
+2. **Paste the Job Description** you're targeting and click [(Ctrl + Enter)] or anywhere on the screen to see the Analyze button
+3. Click the **"Analyze & Match"** button
+4. View the **extracted details** and your **matching percentage**
+5. Click **Download JSON** if you want to save your results.
+
+*Note: Currently optimized for English resumes only.*
+""")
 
 # File uploader
 resume_file = st.file_uploader("Upload Resume (PDF)", type=["pdf"])
@@ -67,3 +87,18 @@ if resume_file and jd_text:
         json_data = json.dumps(resume_data, indent=4)
         st.download_button("📥 Download Extracted JSON", data=json_data, file_name="resume_data.json",
                            mime="application/json")
+
+        with st.expander("📄 Terms of Use & Privacy Notice"):
+            st.markdown("""
+        **SkillScope** is a free resume analysis tool developed by **A28 AI Lab** for educational purposes.
+
+        - We do not collect or store any uploaded resumes or job descriptions.
+        - All processing happens in-memory during your session and is not logged.
+        - Users are responsible for the accuracy and sensitivity of the data they upload.
+        - This tool should not be used for any legally binding evaluations or decisions.
+        *Disclaimer*  
+         This is a resume analysis tool and does not guarantee job placement or outcomes.  
+         Results should be interpreted with human judgment.
+
+        **By using this tool, you agree to these terms.**
+            """)
