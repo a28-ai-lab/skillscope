@@ -3,6 +3,15 @@ import spacy
 from rapidfuzz import fuzz
 import fitz
 import re
+import subprocess
+
+# Ensure spaCy model is available during deployment
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load("en_core_web_sm")
+
 
 def extract_text_from_pdf(pdf_path):
     text = ""
@@ -125,7 +134,7 @@ def extract_name_nlp(text):
 
 
 # Load spaCy model
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
 # Load skill list from CSV
 skills_df = pd.read_csv("skills.csv")
