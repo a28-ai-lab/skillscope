@@ -88,17 +88,19 @@ if resume_file and jd_text:
         st.download_button("📥 Download Extracted JSON", data=json_data, file_name="resume_data.json",
                            mime="application/json")
 
-        with st.expander("📄 Terms of Use & Privacy Notice"):
-            st.markdown("""
-        **SkillScope** is a free resume analysis tool developed by **A28 AI Lab** for educational purposes.
 
-        - We do not collect or store any uploaded resumes or job descriptions.
-        - All processing happens in-memory during your session and is not logged.
-        - Users are responsible for the accuracy and sensitivity of the data they upload.
-        - This tool should not be used for any legally binding evaluations or decisions.
-        *Disclaimer*  
-         This is a resume analysis tool and does not guarantee job placement or outcomes.  
-         Results should be interpreted with human judgment.
 
-        **By using this tool, you agree to these terms.**
-            """)
+with st.expander("📄 Terms of Use & Privacy Notice"):
+    st.markdown("""
+            **SkillScope** is a free resume analysis tool developed by **A28 AI Lab** for educational purposes.
+
+            - We do not collect or store any uploaded resumes or job descriptions.
+            - All processing happens in-memory during your session and is not logged.
+            - Users are responsible for the accuracy and sensitivity of the data they upload.
+            - This tool should not be used for any legally binding evaluations or decisions.
+            *Disclaimer*  
+             This is a resume analysis tool and does not guarantee job placement or outcomes.  
+             Results should be interpreted with human judgment.
+
+            **By using this tool, you agree to these terms.**
+                """)
