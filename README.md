@@ -43,7 +43,7 @@ SkillScope is an AI-powered resume parser and job description matcher. Built wit
 - Streamlit (UI)
 
 ---
-
+ 
 ## 📂 Project Structure
 
 skillscope 
