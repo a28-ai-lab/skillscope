@@ -3,14 +3,28 @@ import spacy
 from rapidfuzz import fuzz
 import fitz
 import re
+import pytesseract
+from PIL import Image
+import io
+
+
+# OPTIONAL: Set path to tesseract executable if needed (Windows only)
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 def extract_text_from_pdf(pdf_path):
     text = ""
-    print("Trying to open:", pdf_path)
     with fitz.open(pdf_path) as doc:
-        print("Opened pdf with:", len(doc), "pages")
         for page in doc:
-            text += page.get_text()
+            page_text = page.get_text()
+            if page_text.strip():
+                text += page_text
+            else:
+                # OCR fallback
+                pix = page.get_pixmap(dpi=300)
+                img_bytes = pix.tobytes("png")
+                img = Image.open(io.BytesIO(img_bytes))
+                ocr_text = pytesseract.image_to_string(img)
+                text += ocr_text
     return text
 
 
@@ -137,11 +151,11 @@ skill_set = list(set(skill_list))
 
 
 
-def extract_skills_fuzzy(resume_text, skill_list, threshold=92):
+def extract_skills_fuzzy(resume_text, skill_list, threshold=75):
     doc = nlp(resume_text.lower())
 
     #create a blocklist of generic and non-skill words
-    blocklist = {"computer vision","Hindi","stakeholder management","teamwork","hypothesis testing", "Teamwork","time management","feature engineering", "hindi", "English","marketing automation", "english","developer","data lake", "campaign management", "lead generation","", "engineer", "project", "experience", "knowledge", "team", "solution","solutions", "skills", "data studio"}
+    blocklist = {"Computer Vision","data lake","Hindi","stakeholder management","teamwork","hypothesis testing","", "Spanish" ,"Teamwork","time management","feature engineering", "hindi", "English","marketing automation","developer","data lake", "campaign management", "lead generation","", "engineer", "project", "experience", "knowledge", "team", "solution","solutions", "skills", "data studio"}
 
 
     # Collect meaningful phrases only
@@ -160,36 +174,60 @@ def extract_skills_fuzzy(resume_text, skill_list, threshold=92):
     extracted_skills = set()
 
     for phrase in all_phrases:
+        phrase = phrase.lower().strip()
         #skip phrases in blocklist
         if phrase in blocklist:
             continue
         for skill in skill_list:
-            score = fuzz.token_set_ratio(phrase, skill.strip())
-            if score >= threshold:
+            skill = skill.lower().strip()
+            if fuzz.token_set_ratio(phrase, skill) >= threshold:
                 extracted_skills.add(skill)
 
-        extracted_skills = extracted_skills - blocklist
 
     return list(extracted_skills)
 
 
-def extract_skills_strict(text, skill_list):
-    found_skills = set()
-    text_lower = text.lower()
-    for skill in skill_list:
-        # Optional: stricter match using word boundaries
-        if re.search(rf'\b{re.escape(skill)}\b', text_lower):
-            found_skills.add(skill)
-    return found_skills
+def extract_skills_fuzzy_from_jd(jd_text, skill_list, threshold=80):
+    jd_doc = nlp(jd_text.lower())
+
+    tokens = {
+        token.text.lower().strip()
+        for token in jd_doc
+        if not token.is_stop and not token.is_punct and len(token.text.strip()) > 2
+    }
+    chunks = {
+        chunk.text.lower().strip()
+        for chunk in jd_doc.noun_chunks
+        if len(chunk.text.strip()) > 2
+    }
+
+    all_phrases = tokens.union(chunks)
+    extracted_jd_skills = set()
+
+    for phrase in all_phrases:
+        phrase = phrase.lower().strip()
+        for skill in skill_list:
+            if fuzz.token_set_ratio(phrase, skill.lower().strip()) >= threshold:
+                extracted_jd_skills.add(skill.lower().strip())
+
+    return list(extracted_jd_skills)
 
 
+#debug print
+print("\n Debug: Resume skills:")
+print(skill_list)
+print("\n Debug: JD Text:")
+#print(jd_)
 # Example usage
 #resume_text = """Experienced in Python, machine learning, SQL, and dashboard tools like Tableau and PowerBI. Worked on Flask apps and pandas pipelines."""
 
 def compare_resume_to_jd(resume_skills, jd_text, skill_list):
-    jd_skills = extract_skills_strict(jd_text, skill_list)
-    matched = sorted(set(resume_skills) & jd_skills)
-    missing = sorted(jd_skills - set(resume_skills))
+    resume_skills = [skill.lower().strip() for skill in resume_skills]
+    jd_skills = [skill.lower().strip() for skill in extract_skills_fuzzy_from_jd(jd_text, skill_list)]
+    print("JD skills extracted:", jd_skills)
+    print("Resume skills extracted:", resume_skills)
+    matched = sorted(set(resume_skills) & set(jd_skills))
+    missing = sorted(set(jd_skills) - set(resume_skills))
     match_percent = int((len(matched) / len(jd_skills)) * 100) if jd_skills else 0
 
     return {

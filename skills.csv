@@ -5,6 +5,7 @@ ARIMA
 AWS
 Agile
 Airflow
+Android Development
 Android Studio
 Angular
 Ansible
@@ -12,6 +13,8 @@ Azure
 BERT
 BambooHR
 Blogging
+C C++
+C
 C#
 C++
 CI/CD
@@ -22,19 +25,18 @@ Cassandra
 Classification
 Clustering
 Communication
-Computer Vision
 Confluence
 Content Strategy
-Copywriting
 Critical Thinking
 Cypress
 DCF
 Dash
+Dashboard
 Data Cleaning
-Data Lake
 Data Pipelines
 Data Warehouse
 Data Wrangling
+Data Visualization
 Databricks
 Deep Learning
 Django
@@ -60,6 +62,7 @@ French
 Freshdesk
 GCP
 GPT
+Generative AI
 Gensim
 German
 Git
@@ -70,6 +73,7 @@ Google Analytics
 Google BigQuery
 Google Sheets
 HTML
+html
 Hadoop
 Hindi
 HubSpot
@@ -93,7 +97,6 @@ Leadership
 LightGBM
 Looker
 Luigi
-Mandarin
 Marketing Automation
 Matplotlib
 Metabase
@@ -105,6 +108,7 @@ Network Security
 Node.js
 Notion
 NumPy
+Object Oriented
 OCR
 OpenCV
 Oracle
@@ -126,12 +130,14 @@ Python
 QuickBooks
 R
 React
+react
 React Native
 Redash
 Redis
 Regression
 Ruby
 Rust
+SAP
 SAP SuccessFactors
 SEO
 SQL
@@ -140,7 +146,6 @@ Scikit-learn
 Scrum
 Seaborn
 Selenium
-Spanish
 Spark
 Stakeholder Management
 Statsmodels
@@ -159,12 +164,12 @@ Time Management
 Time Series Analysis
 Travis CI
 TypeScript
+UNIX
 VSCode
 Valuation
 Vue.js
 Workday
 XGBoost
-Xcode
 YOLO
 Zendesk
 spaCy

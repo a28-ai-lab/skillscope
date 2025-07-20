@@ -6,23 +6,19 @@ SkillScope is an AI-powered resume parser and job description matcher. Built wit
 
 ---
 
-## 🔍 Features
+## 🚀 Features
 
-- Upload and parse PDF resumes
-- Extract:
-  - Name
-  - Location
-  - Designation
-  - Email
-  - Phone
-  - Education
-  - Technical Skills
-- Paste job descriptions and match with extracted skills
-- Display:
-  - Matched Skills ✅
-  - Missing Skills ❌
-  - Match Percentage 📊
-- Download structured resume data as JSON
+- 🧠 Smart skill extraction using NLP and fuzzy matching
+- 📄 Resume parsing with OCR fallback (Tesseract)
+- 📋 JD comparison and skill match percentage
+- 📊 Candidate ranking for multiple resumes
+- 🧾 Structured JSON export per resume
+- 📥 Simple UI using Streamlit
+
+---
+
+## Demo Screenshot
+![SkillScope UI](screenshot/SkillScope.jpeg)
 
 ---
 
@@ -40,6 +36,9 @@ SkillScope is an AI-powered resume parser and job description matcher. Built wit
 - pandas
 - rapidfuzz (for fuzzy matching)
 - PyMuPDF (resume PDF parsing)
+- PyTesseract (OCR Fallback)
+- Pillow
+- Fitz
 - Streamlit (UI)
 
 ---
@@ -72,19 +71,45 @@ git clone https://github.com/a28-ai-lab/skillscope
 cd skillscope
 pip install -r requirements.txt
 streamlit run app.py
+```
+
+---
+## ⚙️ Setup Instructions
+
+1. Clone the repo:
+2.  Install Dependencies
+3. git clone https://github.com/yourusername/skillscope.git cd skillscope
+
+2. Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+3. (Optional) If using Windows, update Tesseract path:
+```
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+```
+4. Run the app:
+
+```
+streamlit run app.py
+```
+
+5. Visit http://localhost:8501 in your browser
 
 
 ---
 
-👤 Author
+## 👤 Author
 
-Ashish S. — Founder, A28 AI Lab
+Ashish S. — Founder, A28 AI Lab - Registered Under Govt. Of India
 Reach me on LinkedIn or GitHub
+[LinkedIn](linkedin.com/in/ashish-sa-kumar) | [GitHub](github.com/ashishkumar-data)
 
 
 ---
 
-🧠 License
+## 🧠 License
 
 This project is proprietary and closed-source.
 All rights reserved © 2025 [A28 AI Lab].
@@ -93,12 +118,11 @@ Unauthorized copying or distribution of the source code is strictly prohibited.
 
 ---
 
-✨ Future Plans
+## 🛠  Future Enhancements
 
-Resume vs JD match report (PDF export)
+- 🔍 Named Entity skill classification (e.g., core vs soft skills)
+- 📤 Export to Excel
+- 🧠 Resume suggestions based on JD
+- 🌐 Hosted version on Streamlit Cloud
 
-Support for DOCX files
-
-Skill suggestions based on gaps
-
-User accounts and dashboards
+---
