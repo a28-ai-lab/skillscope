@@ -1,0 +1,48 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode/IDE settings
+.vscode/
+.idea/
+
+# Environment files
+.env
+.venv/
+venv/
+env/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# MacOS/Linux/Windows junk
+.DS_Store
+Thumbs.db
+
+# PDF files (real resumes)
+*.pdf
+
+# Output files
+*.json
+
+# Streamlit specific
+.streamlit/config.toml
+
+# Jupyter notebooks (optional, if not used)
+*.ipynb
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# Tesseract training data (if any)
+tessdata/
+
+# Screenshot/media folders (optional)
+screenshot/
+media/
